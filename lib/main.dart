@@ -29,27 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text("Ecommerce App"),
-          centerTitle: true,),
-        body: Column(
-          children: [
-            Center(
-              child: Text("Project"),
-            ),
-            Builder(
-              builder: (context) {
-                return ElevatedButton(onPressed: (){
-                  Navigator.pushNamed(context, AuthScreen.routeName);
-                },
-                 child: Text("Click",style: TextStyle(color: Colors.black,)),);
-              }
-            )
-          ],
-        ),
-      ),
+      home: const AuthScreen(),
     );
   }
 }
