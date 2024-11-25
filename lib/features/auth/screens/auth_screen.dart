@@ -25,7 +25,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  
+  final TextEditingController _phoneController = TextEditingController();
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -75,6 +76,8 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: 10,),
                         CustomTextFormField(controller: _emailController, hintText: 'Email',),
                         const SizedBox(height: 10,),
+                        CustomTextFormField(controller: _phoneController, hintText: 'Phone No.',),
+                        const SizedBox(height: 10,),
                         CustomTextFormField(controller: _passwordController, hintText: 'Password'),
                         const SizedBox(height: 10,),
                         CustomButton(text: 'Sign Up', onTap: (){
@@ -105,7 +108,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: EdgeInsets.all(8.0),
                   color: GlobalColors.backgroundColor,
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _signInFormKey,
                     child: Column(
                       children: [
                         CustomTextFormField(controller: _emailController, hintText: 'Email',),
