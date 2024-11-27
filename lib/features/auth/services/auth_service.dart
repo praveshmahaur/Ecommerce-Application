@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecommerce_application/constants/const.dart';
 import 'package:ecommerce_application/constants/error_handling.dart';
 import 'package:ecommerce_application/constants/utils.dart';
@@ -19,7 +21,7 @@ class AuthService {
     try{
         User user = User(
           id: '', 
-          email: email,
+          email: email, 
           name: name, 
           password: password, 
           address: '', 
@@ -33,8 +35,9 @@ class AuthService {
           body: user.toJson(),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-          }
+          },
         );
+
 
         httpErrorHandle(
           response: res, 
@@ -47,5 +50,39 @@ class AuthService {
       showSnackBar(context, err.toString());
     }
   }
+
+  // signin user
+  void signInUser({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async{
+    try{
+        http.Response res = await http.post(
+          Uri.parse('$uri/api/signin'),
+          body: jsonEncode({
+            'email': email,
+            'password' : password
+          }),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        );
+
+        print(res.body);
+
+        httpErrorHandle(
+          response: res, 
+          context: context, 
+          onSuccess: (){
+            // showSnackBar(context, 'Account has been Created!, Please Login');
+          },);
+
+    }catch(err){
+      showSnackBar(context, err.toString());
+    }
+  }
+
+
 
 }
