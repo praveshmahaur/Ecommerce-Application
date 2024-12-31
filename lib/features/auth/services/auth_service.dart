@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:ecommerce_application/constants/const.dart';
 import 'package:ecommerce_application/constants/error_handling.dart';
 import 'package:ecommerce_application/constants/utils.dart';
+import 'package:ecommerce_application/features/auth/home/screens/home_screen.dart';
 import 'package:ecommerce_application/models/user.dart';
+import 'package:ecommerce_application/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthService {
@@ -74,8 +78,13 @@ class AuthService {
         httpErrorHandle(
           response: res, 
           context: context, 
-          onSuccess: (){
+          onSuccess: () async {
             // showSnackBar(context, 'Account has been Created!, Please Login');
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+            await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+            Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route)=> false);
+
           },);
 
     }catch(err){
