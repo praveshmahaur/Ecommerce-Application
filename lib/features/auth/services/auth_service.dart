@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ecommerce_application/constants/const.dart';
 import 'package:ecommerce_application/constants/error_handling.dart';
 import 'package:ecommerce_application/constants/utils.dart';
@@ -73,8 +72,6 @@ class AuthService {
           },
         );
 
-        print(res.body);
-
         httpErrorHandle(
           response: res, 
           context: context, 
@@ -86,6 +83,62 @@ class AuthService {
             Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route)=> false);
 
           },);
+
+    }catch(err){
+      showSnackBar(context, err.toString());
+    }
+  }
+
+
+  // get user data 
+  void getUserData(
+    BuildContext context,
+  ) async{
+    try{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if(token == null){
+        prefs.setString('x-auth-token', '');
+      }
+
+      var tokenRes = await http.post(
+        Uri.parse('$uri/tokenIsValid'),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token!,
+        },
+      );
+
+      var response = jsonDecode(tokenRes.body);
+      if(response == true){
+        // get user data 
+        
+      }
+        // http.Response res = await http.post(
+        //   Uri.parse('$uri/api/signin'),
+        //   body: jsonEncode({
+        //     'email': email,
+        //     'password' : password
+        //   }),
+        //   headers: <String, String>{
+        //     'Content-Type': 'application/json; charset=UTF-8',
+        //   },
+        // );
+
+        // print(res.body);
+
+        // httpErrorHandle(
+        //   response: res, 
+        //   context: context, 
+        //   onSuccess: () async {
+        //     // showSnackBar(context, 'Account has been Created!, Please Login');
+        //     SharedPreferences prefs = await SharedPreferences.getInstance();
+        //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+        //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+        //     Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route)=> false);
+
+        //   },);
 
     }catch(err){
       showSnackBar(context, err.toString());
