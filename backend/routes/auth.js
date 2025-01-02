@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../model/usermodel");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+const auth = require("../middlewares/auth");
 
 const authRouter = express.Router();
 
@@ -86,6 +87,9 @@ authRouter.post("/tokenIsValid", async(req,res) => {
 });
 
 // get user data
-authRouter.get('/',auth)
+authRouter.get('/', auth, async (req, res)=>{
+    const user = await User.findById(req.user);
+    res.json({ ...user._doc, token: req.token});
+})
 
 module.exports = authRouter;

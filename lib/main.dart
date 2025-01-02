@@ -1,4 +1,6 @@
+import 'package:ecommerce_application/common/widgets/bottom_nav.dart';
 import 'package:ecommerce_application/constants/global_colors.dart';
+import 'package:ecommerce_application/features/auth/home/screens/home_screen.dart';
 import 'package:ecommerce_application/features/auth/screens/auth_screen.dart';
 import 'package:ecommerce_application/features/auth/services/auth_service.dart';
 import 'package:ecommerce_application/providers/user_provider.dart';
@@ -24,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    authService.getUserData(context);
   }
 
   @override
@@ -46,7 +49,9 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const AuthScreen(),
+      home:Provider.of<UserProvider>(context).user.token.isNotEmpty
+      ? const BottomNav()
+      :const AuthScreen(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecommerce_application/common/widgets/bottom_nav.dart';
 import 'package:ecommerce_application/constants/const.dart';
 import 'package:ecommerce_application/constants/error_handling.dart';
 import 'package:ecommerce_application/constants/utils.dart';
@@ -80,7 +81,7 @@ class AuthService {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-            Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route)=> false);
+            Navigator.pushNamedAndRemoveUntil(context, BottomNav.routeName, (route)=> false);
 
           },);
 
@@ -112,34 +113,18 @@ class AuthService {
 
       var response = jsonDecode(tokenRes.body);
       if(response == true){
-        // get user data 
-        
+        // get user data
+        http.Response userRes = await http.get(Uri.parse('$uri/'),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token,
+          },
+        ); 
+
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setUser(userRes.body);
       }
-        // http.Response res = await http.post(
-        //   Uri.parse('$uri/api/signin'),
-        //   body: jsonEncode({
-        //     'email': email,
-        //     'password' : password
-        //   }),
-        //   headers: <String, String>{
-        //     'Content-Type': 'application/json; charset=UTF-8',
-        //   },
-        // );
-
-        // print(res.body);
-
-        // httpErrorHandle(
-        //   response: res, 
-        //   context: context, 
-        //   onSuccess: () async {
-        //     // showSnackBar(context, 'Account has been Created!, Please Login');
-        //     SharedPreferences prefs = await SharedPreferences.getInstance();
-        //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-        //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-        //     Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route)=> false);
-
-        //   },);
-
+        
     }catch(err){
       showSnackBar(context, err.toString());
     }
