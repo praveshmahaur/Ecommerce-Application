@@ -1,6 +1,5 @@
 import 'package:ecommerce_application/common/widgets/bottom_nav.dart';
 import 'package:ecommerce_application/constants/global_colors.dart';
-import 'package:ecommerce_application/features/auth/home/screens/home_screen.dart';
 import 'package:ecommerce_application/features/auth/screens/auth_screen.dart';
 import 'package:ecommerce_application/features/auth/services/auth_service.dart';
 import 'package:ecommerce_application/providers/user_provider.dart';
