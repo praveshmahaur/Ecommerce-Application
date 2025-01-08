@@ -1,6 +1,6 @@
 # ecommerce_application
 
-A new Flutter project.
+FullStack Ecommerce Application Using Flutter, ExpressJS, MongoDB
 
 ## Getting Started
 
