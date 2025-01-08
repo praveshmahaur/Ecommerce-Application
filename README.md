@@ -1,4 +1,4 @@
-# ecommerce_application
+# Ecommerce_application
 
 FullStack Ecommerce Application Using Flutter, ExpressJS, MongoDB
 
