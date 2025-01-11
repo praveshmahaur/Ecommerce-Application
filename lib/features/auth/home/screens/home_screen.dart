@@ -1,5 +1,8 @@
 import 'package:ecommerce_application/constants/global_colors.dart';
 import 'package:ecommerce_application/features/auth/home/widgets/address_box.dart';
+import 'package:ecommerce_application/features/auth/home/widgets/carousel_image.dart';
+import 'package:ecommerce_application/features/auth/home/widgets/deal_ofthe_day.dart';
+import 'package:ecommerce_application/features/auth/home/widgets/top_categories.dart';
 import 'package:ecommerce_application/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,11 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
       ),
-      body:Column(
-        children: [
-          const AddressBox(),
-          Text(user.toJson())
-        ],
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
+            AddressBox(),
+            TopCategories(),
+            CarouselImage(),
+            DealOftheDay(),
+            Text(user.toJson()),
+        
+          ],
+        ),
       )
       
     );

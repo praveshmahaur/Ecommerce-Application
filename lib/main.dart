@@ -1,5 +1,6 @@
 import 'package:ecommerce_application/common/widgets/bottom_nav.dart';
 import 'package:ecommerce_application/constants/global_colors.dart';
+import 'package:ecommerce_application/features/admin/screens/admin_screen.dart';
 import 'package:ecommerce_application/features/auth/screens/auth_screen.dart';
 import 'package:ecommerce_application/features/auth/services/auth_service.dart';
 import 'package:ecommerce_application/providers/user_provider.dart';
@@ -9,8 +10,10 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context)=> UserProvider(),)
-  ],child: const MyApp()));
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -39,19 +42,14 @@ class _MyAppState extends State<MyApp> {
           primary: GlobalColors.secondaryColor,
         ),
         appBarTheme: const AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: Colors.black
-          )
-        ),
+            elevation: 0, iconTheme: IconThemeData(color: Colors.black)),
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home:Provider.of<UserProvider>(context).user.token.isNotEmpty
-      ? const BottomNav()
-      :const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? Provider.of<UserProvider>(context).user.type=='user' ? const BottomNav() : AdminScreen()
+          : const AuthScreen(),
     );
   }
 }
-
